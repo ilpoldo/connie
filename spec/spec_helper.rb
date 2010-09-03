@@ -1,9 +1,11 @@
 $LOAD_PATH.unshift(File.dirname(__FILE__))
 $LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '..', 'lib'))
-require 'connie'
-require 'spec'
-require 'spec/autorun'
+require 'rspec'
+# optionally add autorun support
+require 'rspec/autorun'
 
-Spec::Runner.configure do |config|
-  
+require 'connie'
+
+Rspec.configure do |c|
+  c.mock_with :rspec
 end
