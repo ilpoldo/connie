@@ -59,8 +59,9 @@ end
 
 
 describe Connie, 'dictionaries' do
+  
   it "picks name form a dictionary" do
-    Connie.dictionaries[:names].should_receive(:male)
+    Connie[:names].should_receive(:male)
     
     Connie(:names).male
   end

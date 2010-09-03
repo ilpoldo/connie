@@ -20,7 +20,7 @@ module Connie
   # Picks a random line from a text file
   def self.pick_a_line_from(file_path)
     File.open file_path, 'r' do |file|
-      file.inject { |choice, line| rand < 1/file.lineno.to_f ? line : choice }
+      file.inject { |choice, line| rand < 1/file.lineno.to_f ? line.gsub(%r{\s$},'') : choice }
     end
   end
   
