@@ -54,7 +54,7 @@ describe Connie, 'api' do
     Connie[:names].misspelled_name.should match(%r{[MN][ab][rs][kl]})
   end
   
-  it "supports recursive calls to generators" do
+  it "doesn't mess up calls between dictionaries" do
     module Connie
       module Geo
         def where
@@ -64,12 +64,12 @@ describe Connie, 'api' do
       
       module Address
         def name_and_where
-          interpolate ":names.first :geo.where"
+          interpolate ":names.first :names.last :geo.where"
         end
       end
     end
     
-    Connie[:address].name_and_where.should match(%r{Mark [A-Za-z]+, [A-Z]{2,2}})
+    Connie[:address].name_and_where.should match(%r{Mark [A-Za-z]+ [A-Za-z ]+, [A-Z]{2,2}})
   end
   
   it "can store possible formats in a dictionary" do

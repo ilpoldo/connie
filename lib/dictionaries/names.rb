@@ -10,7 +10,9 @@ module Connie
       Connie [true ,false] ? 'male' : 'female'
     end
     
-    # TODO: create a gender sensitive title
+    def title
+      Connie [true, false] ? male_title : female_title
+    end
     
   end
 end
