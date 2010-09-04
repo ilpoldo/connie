@@ -1,6 +1,57 @@
-= connie
+= Connie
+==== Little compact library to synthesise data that does not load big files in memory.
 
-Description goes here.
+Heavily based on Forgery[http://github.com/sevenwire/forgery.git] it uses the same word sources. It's built to be a bit more customisable and allows you to define new strategies and styles both using ruby modules or big text lists.
+
+== Install
+
+On the console:
+    >> gem install connie
+    
+In your Gemfile
+    gem 'connie'
+
+== Usage
+
+Connie offers four exciting functionalities:
+  
+* Dictionaries
+* Shorthand to pick a random element from an array
+* Interpolating strings
+
+===Dictionaries
+
+A dictionary is a vast source of words for a subject, Connie has 4 dictionaries built in:
+
+* Names
+* Geo
+* Net
+* Creative
+* Shopping
+
+For example inspecting the names dictionary:
+    Connie[:names].inspect # Shorthand to access a dictionary
+    <Connie::Dictionary - Connie::Names - company last female suffix title male first gender>
+You receive a quick overview of what this dictionary can generate. To have the dictionary generate something simply:
+    Connie[:names].first
+
+== Extending
+You can extend Dictionaries in two ways:
+
+* Providing word list files either by putting the _word_name_ file into the _dictionary_name_ folder in a folder registered with connie
+* Anywhere in your code by adding instance methods to the Connie::_DictionaryName_ module
+
+The first way will ensure that calling the word type a line is randomly picked from the list; the second is useful to aggregate different words from the lists and present the in different ways:
+
+    # e.g. Extending the names dictionary to return a full name
+    module Connie
+      module Names
+        # Returns a full name
+        def full
+          "#{first} #{last}"
+        end    
+      end
+    end
 
 == Note on Patches/Pull Requests
  
@@ -14,4 +65,4 @@ Description goes here.
 
 == Copyright
 
-Copyright (c) 2010 ilpoldo. See LICENSE for details.
+Copyright (c) 2010 Leandro Pedroni. See LICENSE for details.

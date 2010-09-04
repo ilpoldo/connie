@@ -15,6 +15,7 @@ describe Connie, 'api' do
   end
   
   it "returns a dictionary using []" do
+    raise Connie[:names].inspect
     Connie[:names].male.should eql('Mark')
   end
   
