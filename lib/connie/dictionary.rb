@@ -34,7 +34,7 @@ module Connie
       @word_lists.keys.each do |list|
         instance_eval <<-LIST
         def #{list} options={}
-          Connie.pick_a_line_from @word_lists[:#{list}]
+          interpolate Connie.pick_a_line_from @word_lists[:#{list}]
         end
         LIST
       end
@@ -49,5 +49,10 @@ module Connie
       extend Connie.const_get(@module_name) if Connie.const_defined?(@module_name)
     end
     
+    def interpolate string
+      Connie::Parser.process string, self
+    end
+    
+    alias :i :interpolate
   end
 end

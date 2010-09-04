@@ -24,7 +24,6 @@ describe Connie, 'api' do
   
   it "scopes dictionaries" do
     Connie::Parser.process ':title :male :last', Connie[:names]
-    pending
   end
   
   it "has a nifty regex-like syntax" do
@@ -52,6 +51,24 @@ describe Connie, 'api' do
     end
     
     Connie[:names].misspelled_name.should match(%r{[MN][ab][rs][kl]})
+  end
+  
+  it "supports recursive calls to generators" do
+    module Connie
+      module Geo
+        def where
+          interpolate ":city, :state_short"
+        end
+      end
+      
+      module Address
+        def name_and_where
+          interpolate ":names.first :geo.where"
+        end
+      end
+    end
+    
+    Connie[:address].name_and_where.should match(%r{Mark [A-Za-z]+, [A-Z]{2,2}})
   end
   
   it "can store possible formats in a dictionary" do

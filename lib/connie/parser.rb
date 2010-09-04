@@ -1,13 +1,15 @@
 module Connie
-  module Parser
+  class Parser
     
     #TODO: implement negative lookahead to allow escaping \: and escaping the escaping symbol itself \\
+    attr_accessor :dictionary
+    
     @syntax = {# :method or :dictionary.method
                %r{((?:[\\]+)?\:\w\w+(?:.\w+)?)} => lambda do |dictionary_and_method|
                 arguments = dictionary_and_method[1..-1].split('.').map &:to_sym
                 case arguments.size
                 when 2 then Connie[arguments[0]].send arguments[1]
-                when 1 then scope.send arguments[0]
+                when 1 then dictionary.send arguments[0]
                 end
                end,
                # :d - one digit
@@ -21,18 +23,22 @@ module Connie
                end
                
               }
-    
+        
     def self.process string_to_parse, dictionary = Connie[:names]
       tokenized = string_to_parse.split Regexp.union(@syntax.keys)
             
-      apply_syntax(tokenized, dictionary).join
+      Connie::Parser.new(dictionary).apply_syntax(tokenized).join
+    end
+    
+    def initialize(dictionary)
+      @dictionary = dictionary
     end
     
     # calls trasform on the tokens marked for interpolation and deals with escaping
-    def self.apply_syntax tokens, scope
+    def apply_syntax tokens
       tokens.map do |t|
         if t[0] && t[0].chr == ':'
-          transform t, scope
+          transform t
         elsif t[0] && t[0].chr == '\\' # some level of escaping is present
           raise 'I don\' speak escapeese yet!'
         else
@@ -42,10 +48,16 @@ module Connie
     end
     
     # Interpolates a syntax token
-    def self.transform string, scope
+    def transform string
       result = nil
-      @syntax.each_pair { |k,func| result = func.call(string) if string.match(k) }
+      syntax.each_pair { |k,func| result = instance_exec(string, &func) if string.match(k) }
       return result
+    end
+    
+  private
+    
+    def syntax
+      @rebound_syntax ||= self.class.instance_variable_get('@syntax')
     end
     
   end
