@@ -34,11 +34,22 @@ For example inspecting the names dictionary:
     <Connie::Dictionary - Connie::Names - company last female suffix title male first gender>
 You receive a quick overview of what this dictionary can generate. To have the dictionary generate something simply:
     Connie[:names].first
+    
+===Interpolations
+
+Interpolations happen in a dictionary but allow to reach others through scoping
+    >> Connie[:names].interpolate "Mr. :male :last: :geo.city, :geo.state_short"
+    #=> "Mr. Mark Taylor: Pleasant Hill, NY"
+
+A shorthand method  _i_ is provided for convenience and interpolation is also available through the global method:
+   Connie(':names.male :names.last')
 
 == Extending
 You can extend Dictionaries in two ways:
 
-* Providing word list files either by putting the _word_name_ file into the _dictionary_name_ folder in a folder registered with connie
+* Providing word list files inside folder registered with connie:
+  * putting the _word_name_ file into the _dictionary_name_ folder
+  * creating a _dictionary_name_._word_name_
 * Anywhere in your code by adding instance methods to the Connie::_DictionaryName_ module
 
 The first way will ensure that calling the word type a line is randomly picked from the list; the second is useful to aggregate different words from the lists and present the in different ways:

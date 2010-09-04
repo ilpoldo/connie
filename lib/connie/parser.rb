@@ -5,7 +5,7 @@ module Connie
     attr_accessor :dictionary
     
     @syntax = {# :method or :dictionary.method
-               %r{((?:[\\]+)?\:\w\w+(?:.\w+)?)} => lambda do |dictionary_and_method|
+               %r{((?:[\\]+)?\:[a-z]\w+(?:.\w+)?)} => lambda do |dictionary_and_method|
                 arguments = dictionary_and_method[1..-1].split('.').map &:to_sym
                 case arguments.size
                 when 2 then Connie[arguments[0]].send arguments[1]
@@ -37,9 +37,10 @@ module Connie
     # calls trasform on the tokens marked for interpolation and deals with escaping
     def apply_syntax tokens
       tokens.map do |t|
-        if t[0] && t[0].chr == ':'
+        if t.match '\:[a-z]'
           transform t
         elsif t[0] && t[0].chr == '\\' # some level of escaping is present
+          t.match %r{([\\]+)\:}
           raise 'I don\' speak escapeese yet!'
         else
           t
