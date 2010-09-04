@@ -47,12 +47,17 @@ A shorthand method  _i_ is provided for convenience and interpolation is also av
 == Extending
 You can extend Dictionaries in two ways:
 
-* Providing word list files inside folder registered with connie:
-  * putting the _word_name_ file into the _dictionary_name_ folder
-  * creating a _dictionary_name_._word_name_
-* Anywhere in your code by adding instance methods to the Connie::_DictionaryName_ module
+=== Word Lists
+This will ensure that calling the word type a line is randomly picked from word list file
 
-The first way will ensure that calling the word type a line is randomly picked from the list; the second is useful to aggregate different words from the lists and present the in different ways:
+Providing word list files inside folder registered with connie:
+* putting the _word_name_ file into the _dictionary_name_ folder
+* creating a _dictionary_name_._word_name_
+
+=== Methods in the _DictionaryName_ module
+Anywhere in your code by adding instance methods to the Connie::_DictionaryName_ module
+
+It's handy to aggregate different words from the lists and present the in different ways:
 
     # e.g. Extending the names dictionary to return a full name
     module Connie
@@ -63,6 +68,11 @@ The first way will ensure that calling the word type a line is randomly picked f
         end    
       end
     end
+
+
+
+To add a folder to Connie's sources just do something like this in your code:
+    Connie.dictionaries_path << 'my/cool/dictionaries'
 
 == Note on Patches/Pull Requests
  
