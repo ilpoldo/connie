@@ -19,13 +19,16 @@ describe Connie, 'api' do
   end
   
   it "parses a string passed" do
-    Connie ':names.male :names.surname'
+    Connie(':names.male :names.last').should match %r{Mark [A-Z][a-z]*}
+  end
+  
+  it "scopes dictionaries" do
+    Connie::Parser.process ':title :male :last', Connie[:names]
     pending
   end
   
-  it "has a nifty revex syntax" do
-    Connie '\w{3,4}'
-    pending
+  it "has a nifty regex-like syntax" do
+    Connie(':w{3,10}').should match(%r{[a-z]{3,10}})
   end
   
   it "returns access to a family of dictionaries" do
@@ -43,11 +46,12 @@ describe Connie, 'api' do
         def misspelled_name
           name = male
           name[rand(name.size)] += 1
+          name
         end
       end
     end
     
-    Connie[:names].misspelled_name
+    Connie[:names].misspelled_name.should match(%r{[MN][ab][rs][kl]})
   end
   
   it "can store possible formats in a dictionary" do

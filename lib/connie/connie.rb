@@ -38,5 +38,17 @@ module Connie
   def self.digit
     rand(9)
   end
-
+  
+  def self.formats format, min = 1, max = 0
+    array = max > 0 ? Array.new(rand(max-min)+min) : Array.new(min)
+      
+    generator = case format
+    when :W then lambda {Connie.letter(:uppercase)}
+    when :w then lambda {Connie.letter}
+    when :d then lambda {Connie.digit.to_s}
+    end
+    
+    array.map{generator.call}.join
+  end
+  
 end

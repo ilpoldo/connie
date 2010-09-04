@@ -30,7 +30,7 @@ module Connie
       # Indexes the dictionary files into an array
       @word_lists = @word_lists.inject({}) {|a,f| a[f.split(%r{[./]}).last.to_sym]=f; a}
       
-            
+      # Defines methods based on word lists
       @word_lists.keys.each do |list|
         instance_eval <<-LIST
         def #{list} options={}
@@ -38,6 +38,13 @@ module Connie
         end
         LIST
       end
+      
+      # Find and load modules
+      modules = []
+      Connie.dictionaries_paths.each do |dictionaries_path|
+        modules.concat Dir[File.join dictionaries_path, "#{@name}.rb"]
+      end
+      modules.each {|m| require m}
       
       extend Connie.const_get(@module_name) if Connie.const_defined?(@module_name)
     end
