@@ -57,3 +57,7 @@ def Connie(argument, options={})
     raise ArgumentError, 'Connie\'s shorthand expects a string to parse or a symbol or an array'
   end
 end
+
+def Connie?
+  [true,false][rand 2]
+end

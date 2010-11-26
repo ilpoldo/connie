@@ -3,15 +3,15 @@ module Connie
     
     # Returns either a male or a female first name
     def first
-      Connie [true, false] ? male : female
+      Connie? ? male : female
     end
     
     def gender
-      Connie [true ,false] ? 'male' : 'female'
+      Connie? ? 'male' : 'female'
     end
     
     def title
-      Connie [true, false] ? male_title : female_title
+      Connie? ? male_title : female_title
     end
     
   end
