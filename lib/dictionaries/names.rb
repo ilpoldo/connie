@@ -14,5 +14,9 @@ module Connie
       Connie? ? male_title : female_title
     end
     
+    # Returns an array of same gender name and title
+    def first_with_title
+      Connie? ? [male_title, male] : [female_title, female]
+    end
   end
 end

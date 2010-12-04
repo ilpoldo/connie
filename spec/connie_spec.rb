@@ -93,6 +93,11 @@ describe Connie, 'dictionaries' do
     pending
   end
   
+  it "fetches lines in order from the dictionary" do
+    Connie[:numbers].ordinal(:line => 3).should eql('Third')
+    Connie[:numbers].ordinal(:line => 9).should eql('Third')
+  end
+  
   it "should warn in case of double dictionary" do
     pending
   end

@@ -17,10 +17,15 @@ module Connie
     @dictionaries[dictionary.name.to_sym] = dictionary
   end
   
-  # Picks a random line from a text file
-  def self.pick_a_line_from(file_path)
+  # Picks a random line from a text file or a precise line if a number is provided
+  def self.pick_a_line_from(file_path, line_no = false)
     File.open file_path, 'r' do |file|
-      file.inject { |choice, line| rand < 1/file.lineno.to_f ? line.gsub(%r{\s$},'') : choice }
+      unless line_no
+        file.inject { |choice, line| rand < 1/file.lineno.to_f ? line.gsub(%r{\s$},'') : choice }
+      else
+        line = line_no % (file.lineno - 1) # cycles around the file
+        file.readlines[line_no-1].gsub(%r{\s$},'')
+      end
     end
   end
   

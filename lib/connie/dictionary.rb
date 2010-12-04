@@ -46,7 +46,7 @@ module Connie
       @word_lists.keys.each do |list|
         instance_eval <<-LIST
         def #{list} options={}
-          interpolate Connie.pick_a_line_from @word_lists[:#{list}]
+          interpolate Connie.pick_a_line_from @word_lists[:#{list}], options[:line]
         end
         LIST
       end
