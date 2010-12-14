@@ -21,10 +21,10 @@ module Connie
   def self.pick_a_line_from(file_path, line_no = false)
     File.open file_path, 'r' do |file|
       unless line_no
-        file.inject { |choice, line| rand < 1/file.lineno.to_f ? line.gsub(%r{\s$},'') : choice }
+        file.inject { |choice, line| rand < 1/file.lineno.to_f ? line.gsub(/\n$/,'') : choice }
       else
         line = line_no % (file.lineno - 1) # cycles around the file
-        file.readlines[line_no-1].gsub(%r{\s$},'')
+        file.readlines[line_no-1].gsub(/\n$/,'')
       end
     end
   end
