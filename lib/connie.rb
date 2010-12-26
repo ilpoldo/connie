@@ -53,6 +53,8 @@ def Connie(argument, options={})
     end
   when Array
     argument[rand(argument.size)]
+  when Range
+    rand(argument.max-argument.min+1) + argument.min
   else
     raise ArgumentError, 'Connie\'s shorthand expects a string to parse or a symbol or an array'
   end
