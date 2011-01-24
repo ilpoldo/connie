@@ -16,15 +16,15 @@ module Connie
     
     # Returns an array of same gender name and title
     def first_with_title
-      Connie? ? [male_title, male] : [female_title, female]
+      Connie? ? [male, male_title] : [female, female_title]
     end
     
     
     def first_sometimes_with_title
       if Connie?
-        Connie? ? [male_title, male] : [female_title, female]
+        Connie? ? [male, male_title] : [female, female_title]
       else
-        Connie? ? [nil, male] : [nil, female]
+        Connie? ? [male] : [female]
       end
     end
     
