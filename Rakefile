@@ -16,13 +16,13 @@ Jeweler::Tasks.new do |gem|
   gem.summary = %Q{Little compact library to synthesise data that does not load big files in memory}
   gem.description = %Q{Heavily based on Forgery it uses the same word sources. It's built to be a bit more customisable and allows you to define new strategies and styles both using ruby modules or big text lists.}
   gem.email = "ilpoldo@gmail.com"
-  gem.homepage = "http://github.com/ilpoldo@gmail.com/connie"
+  gem.license = "MIT"
+  gem.email = "ilpoldo@gmail.com"
+  gem.authors = ["ilpoldo"]
+  
+  gem.homepage = "http://github.com/ilpoldo/connie"
   gem.authors = ["Leandro Pedroni"]
-  gem.add_development_dependency "rspec", ">= 1.2.9"
-  # Include your dependencies below. Runtime dependencies are required when using your gem,
-  # and development dependencies are only needed for development (ie running rake tasks, tests, etc)
-  #  gem.add_runtime_dependency 'jabber4r', '> 0.1'
-  #  gem.add_development_dependency 'rspec', '> 1.2.3'
+
 end
 Jeweler::RubygemsDotOrgTasks.new
 
