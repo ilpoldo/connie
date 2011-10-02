@@ -24,7 +24,7 @@ module Connie
         file.inject { |choice, line| rand < 1/file.lineno.to_f ? line.strip : choice }
       else
         line = line_no % (file.lineno - 1) # cycles around the file
-        file.readlines[line_no-1].strip
+        file.readlines[line-1].strip
       end
     end
   end

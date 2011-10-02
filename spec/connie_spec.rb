@@ -10,13 +10,16 @@ describe Connie, 'api' do
     Connie(:'names.male').should eql('Mark')
   end
   
-  it "returns a dictionary using the shorthand" do
-    Connie(:names).male.should eql('Mark')
+  it "returns a dictionary using the () shorthand" do
+    dictionary = Connie(:names)
+    dictionary.class.should eql(Connie::Dictionary)
+    dictionary.male.should eql('Mark')
   end
   
   it "returns a dictionary using []" do
-    raise Connie[:names].inspect
-    Connie[:names].male.should eql('Mark')
+    dictionary = Connie[:names]
+    dictionary.class.should eql(Connie::Dictionary)
+    dictionary.male.should eql('Mark')
   end
   
   it "parses a string passed" do
@@ -64,7 +67,7 @@ describe Connie, 'api' do
       
       module Address
         def name_and_where
-          interpolate ":names.first :names.last :geo.where"
+          interpolate ":names.male :names.last :geo.where"
         end
       end
     end
