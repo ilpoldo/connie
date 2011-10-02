@@ -4,6 +4,7 @@ require 'connie/parser'
 
 
 module Connie
+  
   # class Railtie < Rails::Railtie
   #   config.tabelle = ActiveSupport::OrderedOptions.new
   # 
@@ -21,6 +22,11 @@ module Connie
   # end
   @dictionaries_paths = [File.expand_path('dictionaries',File.dirname(__FILE__))]
   VERSION = File.exist?('VERSION') ? File.read('VERSION') : ""
+  
+  def self.dictionaries_paths
+    @dictionaries_paths
+  end
+  
 end
 
 # The shorthand method to use connie
